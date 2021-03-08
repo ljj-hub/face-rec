@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        #header {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 5px;
+        }
+
+        #nav {
+            padding-top: 100px;
+            line-height: 30px;
+            text-align: center;
+            background-color: #eeeeee;
+            height: 538px;
+            width: 220px;
+            float: left;
+        }
+
+        #section {
+            margin-top: 15px;
+            border: solid 3px #eeeeee;
+            border-radius: 10px;
+            background-color:#eeeeee;
+            position: relative;
+            left: 10%;
+            width: 1000px;
+            float: left;
+        }
+
+        #name {
+            text-align: right;
+            margin-right: 300px;
+        }
+
+        #images {
+            width: 300px;
+            height: 500px;
+            padding-left: 100px;
+        }
+
+        #images2 {
+            width: 300px;
+            height: 500px;
+            padding-left: 160px;
+        }
+
+        #gif {
+            padding-top: 100px;
+        }
+
+        .comfirm {
+            position: absolute;
+            left: 43%;
+            top: 50%;
+            width: 100px;
+            height: 100px;
+            border: 1px solid white;
+            border-radius: 10px;
+            background-color: white;
+            font-size: larger;
+            transition: all .5s;
+        }
+        .comfirm:hover {
+            background-color: rgb(97, 95, 95);
+            color: white;
+        }
+
+        #file {
+            padding-left: 100px;
+            border: black solid 1px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            margin-left: 100px;
+            width: 660px;
+        }
+
+        #photo{
+            margin-left: 100px;
+        }
+
+    </style>
+    <script language="javascript">
+        function exec1(command) {
+            var ws = new ActiveXObject("WScript.Shell");
+            ws.run(command);           //exec 和 run
+            ws = null;
+            //alert("ok");             弹出一个小框显示“ok”
+        }     
+    </script>
+
+</head>
+
+<body>
+    <div id="header">
+        <h1>人脸识别——faced</h1>
+        <h3 id="name">--第16组</h3>
+    </div>
+
+
+    <div id="nav">
+        <h2>使用方法 </h2>
+        1.选择图片<br>
+        2.点击按钮<br>
+        3.生成图片<br>
+        <br />
+        <img src="{% static 'demo.gif' %}" width="220" height="200" id="gif" />
+    </div>
+
+    <div id="section">
+        <h2 id="photo">选择图片 </h2>
+        <form method="post" enctype="multipart/form-data" action="/test/">
+            <div class="warp">
+                <input name="img" type="file" class="select" id="file" onchange="test(this)">
+            </div>
+            {% csrf_token %}
+            <button type="submit" class="comfirm">确认</button>
+        </form>
+        <img id="images" src="{% static 'chang.jpg' %}">
+        <img id="images2" src="{% static 'test1.png' %}">
+    </div>
+
+
+
+    <script language="javascript">
+        // var file = document.getElementById('file')
+        var preview = document.getElementById('images')
+        console.log(preview)
+        // 当用户选择完文件以后
+        let test = function (temp) {
+            // 1、创建文件读取对象
+            var reader = new FileReader()
+            // 用户选择的文件列表：this.files[0]
+            // 2读取文件
+            console.log(reader)
+            console.log(temp)
+
+            reader.readAsDataURL(temp.files[0])
+            console.log(reader.result)
+            // 监听onload事件
+            reader.onload = function () {
+                // 将文件读取结果显示在页面中
+                preview.src = reader.result
+            }
+        }
+    </script>
+
+</body>
+
+</html>
